@@ -568,11 +568,163 @@
     .modal-stats { grid-template-columns: 1fr; }
     .topbar h1 { font-size: 20px; }
     .chart-box { height: 320px; }
+    .btn-pdf { bottom: 16px; right: 16px; }
+  }
+
+  /* ==========================================================
+     BOTÓN DESCARGAR PDF — flotante esquina inferior derecha
+     ========================================================== */
+  .btn-pdf {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gray-900);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+  }
+  .btn-pdf:hover {
+    background: var(--rp-red);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(227,6,19,0.28), 0 6px 12px rgba(0,0,0,0.14);
+  }
+  .btn-pdf:active { transform: translateY(0); }
+  .btn-pdf svg { display: block; }
+
+  /* ==========================================================
+     ESTILOS PARA IMPRESIÓN / PDF
+     ========================================================== */
+  @media print {
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    html, body {
+      background: #FFFFFF !important;
+      background-image: none !important;
+      color: #000000;
+      font-size: 11pt;
+    }
+
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    .wrap {
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+
+    /* Ocultar elementos interactivos */
+    .btn-pdf,
+    .modal-overlay,
+    .live-dot,
+    .obra-card .arrow {
+      display: none !important;
+    }
+
+    /* Header simplificado */
+    .topbar {
+      box-shadow: none !important;
+      border: 1px solid #DDD !important;
+      border-top: 3px solid #E30613 !important;
+      padding: 14px 20px !important;
+      margin-bottom: 14px !important;
+      page-break-inside: avoid;
+    }
+    .topbar .logo-box img { height: 36px !important; }
+    .topbar h1 { font-size: 18pt !important; }
+    .topbar .eyebrow { font-size: 8pt !important; }
+    .topbar .subtitle { font-size: 9pt !important; }
+
+    .statusbar {
+      box-shadow: none !important;
+      padding: 10px 20px !important;
+      margin-bottom: 14px !important;
+      font-size: 9pt !important;
+      page-break-inside: avoid;
+    }
+
+    /* KPIs sin sombras pesadas */
+    .kpis { gap: 8px !important; margin-bottom: 14px !important; }
+    .kpi {
+      box-shadow: none !important;
+      border: 1px solid #DDD !important;
+      padding: 14px 16px !important;
+      page-break-inside: avoid;
+    }
+    .kpi:hover { transform: none !important; }
+    .kpi .value { font-size: 28pt !important; }
+    .kpi .label { font-size: 8pt !important; }
+    .kpi .footnote { font-size: 9pt !important; }
+    .kpi .unit { font-size: 13pt !important; }
+
+    /* Panel del gráfico */
+    .panel {
+      box-shadow: none !important;
+      border: 1px solid #DDD !important;
+      padding: 14px 18px !important;
+      margin-bottom: 14px !important;
+      page-break-inside: avoid;
+    }
+    .panel-head h2 { font-size: 13pt !important; }
+    .chart-box { height: 280px !important; }
+
+    /* Section title */
+    .section-title { margin: 8px 0 10px !important; }
+    .section-title h2 { font-size: 13pt !important; }
+
+    /* Tarjetas de obras compactas en grid 3 columnas */
+    .obras-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 8px !important;
+    }
+    .obra-card {
+      box-shadow: none !important;
+      border: 1px solid #DDD !important;
+      padding: 12px 14px !important;
+      page-break-inside: avoid;
+      cursor: default !important;
+    }
+    .obra-card:hover { transform: none !important; }
+    .obra-card .obra-name { font-size: 11pt !important; margin-bottom: 8px !important; }
+    .obra-card .obra-code { font-size: 7.5pt !important; }
+    .obra-card .stats .big { font-size: 18pt !important; }
+    .obra-card .stats .total { font-size: 11pt !important; }
+    .obra-card .stats .pct { font-size: 11pt !important; }
+
+    /* Footer */
+    footer {
+      margin-top: 14px !important;
+      padding: 10px 0 !important;
+      font-size: 8pt !important;
+      page-break-inside: avoid;
+    }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <button class="btn-pdf" onclick="window.print()" title="Descargar como PDF">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" y1="15" x2="12" y2="3"></line>
+    </svg>
+    Descargar PDF
+  </button>
 
   <header class="topbar">
     <div class="logo-box">
